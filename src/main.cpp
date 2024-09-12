@@ -52,7 +52,8 @@ PYBIND11_MODULE(cmake_example, m) {
     )pbdoc");
 
 #ifdef VERSION_INFO
-    m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+    //m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+    m.attr("__version__") = "0.0.1";
 #else
     m.attr("__version__") = "dev";
 #endif
