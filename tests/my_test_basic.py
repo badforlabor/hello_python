@@ -1,3 +1,7 @@
+# coding=utf-8
+# 开启asan，这样很容易发现问题： C++ -> 命令行 -> 追加：  /fsanitize=address /Zi 
+#           然后把clang_rt.asan_dynamic-x86_64.dll拷贝到dll目录
+
 import sys
 from os.path import abspath, join, dirname
 
@@ -5,6 +9,8 @@ from os.path import abspath, join, dirname
 sys.path.insert(0, join(abspath(dirname(__file__)), '..', 'bin64', 'Debug'))
 sys.path.insert(0, join(abspath(dirname(__file__)), '..', 'bin64', 'Release'))
 
+import faulthandler
+faulthandler.enable()
 
 import cmake_example as m
 import ctypes
@@ -63,11 +69,37 @@ test_anim()
 # c = Cat()
 # m.call_go(c)
 
+def test_unique_ptr():
+    d = m.OuterClass()
+    d.obj.method()
+    print("test_unique_ptr done.")
+
+test_unique_ptr()
+
+def test_unique_ptr2():
+    p = m.Parent()    
+    c = p.get_child()
+    print(c.hello())
+    arr = p.get_children()
+    print(arr)
+    print(arr[0].hello())
+    arr[0] = c
+    print(arr)
+    print(arr[0].hello())
+
+test_unique_ptr2()
+
 smart_ptr_ref = 0
 def test_smartptr():
-    d = m.create_example()
-    d.value = 1
-    d.show_me()
+    print("test unique")
+    a = m.create_unique()
+    a.show_me()
+    print("123:", m.create_unique().value)
+    d = m.create_unique()
+    print(d.value)
+    # d.value = 1
+    # d.value = 2
+    # d.show_me()
     # del d
 
     print("test_smartptr 2222222222222")
