@@ -1,1 +1,1 @@
-python my_test_basic.py
+python main.py
