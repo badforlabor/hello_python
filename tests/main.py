@@ -5,16 +5,19 @@
 from loguru import logger
 import gc
 import ctypes
-import cmake_example as m
 import faulthandler
 import sys
 from os.path import abspath, join, dirname
+import basic.func
 
-import basic.import_and_run
-
-# 设置dll所在位置，否则import的时候，会失败！！！
+# 临时关掉格式化代码，否则，会导致导入失败！！
+# autopep8: off
+# 先设置dll所在位置，否则import的时候，会失败！！！
 sys.path.insert(0, join(abspath(dirname(__file__)), '..', 'bin64', 'Debug'))
 sys.path.insert(0, join(abspath(dirname(__file__)), '..', 'bin64', 'Release'))
+# 再导入dll
+import cmake_example as m
+# autopep8: on
 
 faulthandler.enable()
 
@@ -35,7 +38,10 @@ def test_loguru():
 
 basic.func.test1()
 
+# autopep8: off
 # 导入，并立即执行！
+import basic.import_and_run
+# autopep8: on
 
 
 def test_main():
