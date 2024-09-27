@@ -8,3 +8,4 @@ _generate/
 *env*
 bin64/
 .github
+.idea
